@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  web:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../task_management:/app
+    ports:
+      - "8000:8000"
+    container_name: task_management_web
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+    depends_on:
+      - pgdb
+    env_file:
+      - ../task_management/.env
+  
+  
+  pgdb:
+    image: postgres
+    container_name: postgres_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    env_file:
+      - ../task_management/.env
+
+volumes:
+  pgdata:
+
