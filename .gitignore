@@ -1,5 +1,6 @@
 # Django #
-migrations/
+*/migrations/*.py[cod]
+!*/migrations/__init__.py
 *.log
 *.pot
 *.pyc
